@@ -1,0 +1,25 @@
+add_library({{ ModuleName }} INTERFACE)
+add_library(${PROJECT_PREFIX}::{{ ModuleName }} ALIAS {{ ModuleName }})
+	
+target_include_directories({{ ModuleName }}
+	INTERFACE
+	$<INSTALL_INTERFACE:include>
+	$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+)
+
+# !!! NOTE: Optional Dependencies like "boost"
+#target_link_libraries({{ ModuleName }}
+#    PUBLIC
+#        Boost::chrono
+#)
+
+install(DIRECTORY include/
+	DESTINATION include
+)
+
+install(TARGETS {{ ModuleName }}
+    EXPORT Targets
+    LIBRARY DESTINATION lib
+    ARCHIVE DESTINATION lib
+    RUNTIME DESTINATION bin
+)
